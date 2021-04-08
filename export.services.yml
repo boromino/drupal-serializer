@@ -1,0 +1,33 @@
+services:
+  plugin.manager.export:
+    class: Drupal\export\Plugin\ExportManager
+    parent: default_plugin_manager
+  export.commands:
+    class: Drupal\export\Commands\ExportCommands
+    arguments: ['@plugin.manager.export']
+    tags:
+      - { name: drush.command }
+  serializer.encoder.txt:
+    class: Drupal\export\Encoder\TxtEncoder
+    tags:
+      - { name: encoder, priority: 10, format: txt }
+  serializer.normalizer.txt.content_entity:
+    class: Drupal\export\Normalizer\ContentEntityNormalizer
+    tags:
+      - { name: normalizer, priority: 10 }
+  serializer.normalizer.txt.field_item_list:
+    class: Drupal\export\Normalizer\FieldItemListNormalizer
+    tags:
+      - { name: normalizer, priority: 10 }
+  serializer.normalizer.txt.field_item:
+    class: Drupal\export\Normalizer\FieldItemNormalizer
+    tags:
+      - { name: normalizer, priority: 10 }
+  serializer.normalizer.txt.address_item:
+    class: Drupal\export\Normalizer\AddressItemNormalizer
+    tags:
+      - { name: normalizer, priority: 15 }
+  serializer.normalizer.txt.date_range_item:
+    class: Drupal\export\Normalizer\DateRangeItemNormalizer
+    tags:
+      - { name: normalizer, priority: 15 }
